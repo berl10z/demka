@@ -33,7 +33,10 @@ Route::post('/login', [LoginController::class,'login'])->name('login');
 Route::get('/logout', [LoginController::class,'logout'])->name('logout');
 
 Route::get('/catalog', [ProductController::class,'index'])->name('catalog');
-Route::get('/cart', [CartController::class,'index'])->name('cart');
-Route::get('/add/{id}', [CartController::class,'addToCart'])->name('addToCart');
-Route::get('/remove/{id}', [CartController::class,'removeFromCart'])->name('removeFromCart');
-Route::get('/delete/{id}', [CartController::class,'deleteFromCart'])->name('deleteFromCart');
+
+Route::middleware('auth')->group(function(){
+    Route::get('/cart', [CartController::class,'index'])->name('cart');
+    Route::get('/add/{id}', [CartController::class,'addToCart'])->name('addToCart');
+    Route::get('/remove/{id}', [CartController::class,'removeFromCart'])->name('removeFromCart');
+    Route::get('/delete/{id}', [CartController::class,'deleteFromCart'])->name('deleteFromCart');
+});

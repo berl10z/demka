@@ -25,14 +25,14 @@ class CartController extends Controller
                 return back()->withErrors(['error' => 'Нет такого количества']);
             }
             $cart->increment('quantity', 1);
-            return back();
+            return to_route('cart');
         }
         Cart::create([
             'product_id' => $productId,
             'user_id' => auth()->id(),
             'quantity' => 1
         ]);
-        return back();
+        return to_route('cart');
     }
     public function removeFromCart($id)
     {

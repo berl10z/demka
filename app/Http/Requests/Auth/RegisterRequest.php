@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
         return [
             'name' => ['required','string', 'max:255'],
             'surname' => ['required','string', 'max:255'],
-            'patronymic' => ['string', 'max:255'],
+            'patronymic' => ['nullable','string','max:255'],
             'login' => ['required','string','max:255', 'unique:users'],
             'email' => [ 'required','email', 'max:255','string'],
             'password' => ['required','string','min:6','confirmed'],

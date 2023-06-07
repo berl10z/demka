@@ -31,7 +31,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cart') }}">{{ __('Cart') }}</a>
+                            <a class="nav-link" href="{{ route('catalog') }}">{{ __('Catalog') }}</a>
                         </li>
                     </ul>
 
@@ -52,9 +52,10 @@
                                         {{ Auth::user()->name }}
                                       </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                      <li><a class="dropdown-item" href="{{ route('logout') }}">logout</a></li>
+                                      <li class="dropdown-item"><a class="nav-link text-danger"  href="{{ route('logout') }}">Logout</a></li>
+                                      <li class="dropdown-item"><a class="nav-link"  href="{{ route('cart') }}">{{ __('Cart') }}</a></li></li>
                                     </ul>
-                                  </div>
+                                </div>
                             </li>
                         @endguest
                     </ul>
