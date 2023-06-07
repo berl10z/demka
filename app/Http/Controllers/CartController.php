@@ -10,15 +10,13 @@ class CartController extends Controller
     public function index()
     {
         $carts = Cart::where('user_id', auth()->id())->where('status', 0)->orderBy('id', 'desc')->get();
-        $orders = Cart::where('user_id', auth()->id())->where('status', '!=', 0)->get();
-
-        return view('cart', compact('carts', 'orders'));
+        return view('cart', compact('carts'));
     }
     public function addToCart($productId)
     {
         $product = Product::findOrFail($productId);
 
-        $cart = Cart::where('user_id', auth()->id())->where('product_id', $productId)->where('status', '<=', 0)->first();
+        $cart = Cart::where('user_id', auth()->id())->where('product_id', $productId)->where('status', 0)->first();
 
         if ($cart) {
             if ($cart->quantity >= $product->count) {
@@ -45,7 +43,7 @@ class CartController extends Controller
     }
     public function deleteFromCart($id)
     {
-        $cart = Cart::find($id);
+        Cart::find($id);
 
         Cart::destroy($id);
 

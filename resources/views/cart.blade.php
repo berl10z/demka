@@ -16,6 +16,11 @@
             </div>
         </div>
         @endforeach
+        <form action="{{ route('order.create') }}" method="post">
+            @csrf
+            <input type="password" name="password" id="password">
+            <button type="submit">Оформить</button>
+        </form>
     </div>
 </div>
 

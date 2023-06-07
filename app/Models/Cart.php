@@ -13,6 +13,7 @@ class Cart extends Model
         'product_id',
         'user_id',
         'quantity',
+        'status'
     ];
 
     public function product()
@@ -24,4 +25,13 @@ class Cart extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getStatus() {
+        return [
+        1 => 'Новый',
+        2 => 'Подтверждённый',
+        3 => 'Отменённый',
+        ][$this->status];
+    }
+
 }

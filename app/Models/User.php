@@ -49,4 +49,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cart::class);
     }
+
+    public function fullName() {
+        return $this->name.' '.$this->surname.' '.$this?->patronymic;
+    }
 }

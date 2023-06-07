@@ -14,8 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('count','>',0)->get();
-        return view('catalog', compact('products'));
+
     }
 
     /**

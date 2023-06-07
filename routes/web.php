@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CatalogController;
+
 
 
 /*
@@ -32,11 +34,14 @@ Route::post('/login', [LoginController::class,'login'])->name('login');
 
 Route::get('/logout', [LoginController::class,'logout'])->name('logout');
 
-Route::get('/catalog', [ProductController::class,'index'])->name('catalog');
+Route::get('/catalog', [CatalogController::class,'index'])->name('catalog');
 
 Route::middleware('auth')->group(function(){
     Route::get('/cart', [CartController::class,'index'])->name('cart');
     Route::get('/add/{id}', [CartController::class,'addToCart'])->name('addToCart');
     Route::get('/remove/{id}', [CartController::class,'removeFromCart'])->name('removeFromCart');
     Route::get('/delete/{id}', [CartController::class,'deleteFromCart'])->name('deleteFromCart');
+
+    Route::get('/orders', [OrderController::class,'index'])->name('orders');
+    Route::post('/order/create', [OrderController::class,'orderCreate'])->name('order.create');
 });
