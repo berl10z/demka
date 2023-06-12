@@ -9,16 +9,7 @@ class CatalogController extends Controller
 {
     public function index(Request $r)
     {
-        $sortBy = $r->input('sort');
-
-        if ($sortBy !== 'asc' && $sortBy !== 'desc') {
-            $sortBy = 'asc';
-        }
-
-        $products = Product::where('count', '>', 0)
-            ->orderBy('price', $sortBy)
-            ->get();
-
+        $products  = Product::all();
         return view('catalog', compact('products'));
     }
 }

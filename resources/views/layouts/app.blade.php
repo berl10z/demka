@@ -54,6 +54,7 @@
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                       <li class="dropdown-item"><a class="nav-link text-danger"  href="{{ route('logout') }}">Logout</a></li>
                                       <li class="dropdown-item"><a class="nav-link"  href="{{ route('cart') }}">{{ __('Cart') }}</a></li></li>
+                                      <li class="dropdown-item"><a class="nav-link"  href="{{ route('orders') }}">{{ __('Orders') }}</a></li></li>
                                     </ul>
                                 </div>
                             </li>
@@ -62,7 +63,9 @@
                 </div>
             </div>
         </nav>
-
+        @foreach ($errors->all() as $e)
+        <p class="text-danger fw-bold p-3">{{ $e }}</p>
+        @endforeach
         <main class="py-4">
             @yield('content')
         </main>

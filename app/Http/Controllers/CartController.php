@@ -9,14 +9,14 @@ class CartController extends Controller
 {
     public function index()
     {
-        $carts = Cart::where('user_id', auth()->id())->where('status', 0)->orderBy('id', 'desc')->get();
+        $carts = Cart::where('user_id', auth()->id())->where('in_order', false)->orderBy('id', 'desc')->get();
         return view('cart', compact('carts'));
     }
     public function addToCart($productId)
     {
         $product = Product::findOrFail($productId);
 
-        $cart = Cart::where('user_id', auth()->id())->where('product_id', $productId)->where('status', 0)->first();
+        $cart = Cart::where('user_id', auth()->id())->where('product_id', $productId)->where('in_order', false)->first();
 
         if ($cart) {
             if ($cart->quantity >= $product->count) {

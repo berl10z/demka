@@ -44,4 +44,5 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/orders', [OrderController::class,'index'])->name('orders');
     Route::post('/order/create', [OrderController::class,'orderCreate'])->name('order.create');
+    Route::post('/order/deleteOrder/{id}', [OrderController::class,'deleteOrder'])->name('order.delete');
 });
