@@ -33,8 +33,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('catalog') }}">{{ __('Catalog') }}</a>
                         </li>
+                        @if (auth()->check() && auth()->user()->login == 'admin')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.index') }}">{{ __('Админ-панель') }}</a>
+                        </li>
+                        @endif
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->

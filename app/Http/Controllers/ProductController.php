@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\Product\CreateProductRequest;
+use App\Http\Requests\Product\ProductUpdateRequest;
 
 class ProductController extends Controller
 {
@@ -14,7 +17,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-
+        $products = Product::get();
+        return view('admin.product.index',compact('products'));
     }
 
     /**
@@ -24,7 +28,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::get();
+        return view('admin.product.create',compact('categories'));
     }
 
     /**
@@ -33,9 +38,17 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $r)
     {
-        //
+        $data = $r->validated();
+
+        if($r->hasFile('image')){
+            $data['image'] = $r->file('image')->store('images', ['disk' => 'public']);
+        }
+
+        Product::create($data);
+
+        return to_route('product.index');
     }
 
     /**
@@ -44,9 +57,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+
+        $product = Product::findOrFail($id);
+
+        return view('admin.product.show',compact('product'));
     }
 
     /**
@@ -55,9 +71,13 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $categories = Category::get();
+
+        return view('admin.product.edit',compact('product', 'categories'));
     }
 
     /**
@@ -67,9 +87,28 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductUpdateRequest $r,$id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $data = $r->validated();
+
+        $product->name = $data['name'];
+
+        if($r->hasFile('image')){
+            $data['image'] = $r->file('image')->store('images', ['disk' => 'public']);
+            $product->image = $data['image'];
+        }
+
+        $product->price = $data['price'];
+
+        $product->count = $data['count'];
+
+        $product->category_id = $data['category_id'];
+
+        $product->save();
+
+        return to_route('product.index');
     }
 
     /**
@@ -78,8 +117,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $product->delete();
+
+        return to_route('product.index');
     }
 }
